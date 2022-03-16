@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 echo "practic2.php <hr>";
 echo "checkdate <br>";
@@ -9,10 +9,12 @@ $year   =   2022;
 
 if (checkdate($month, $day, $year)) echo "Допустимая дата <br>";
 else echo "Недопустимая дата <br>";
+
+
 if (file_exists("testfile.txt")) echo "Файл существует <br>";
 else echo "файл не существует <br>";
 
-$fh = fopen("testfile.txt", 'w') or die("Создать файл не удалось");
+$fh = fopen("testfile2.txt", 'w') or die("Создать файл не удалось");
 
 $text = <<<_END
 Строка 1
@@ -43,7 +45,33 @@ echo $text;
 
 // echo "<br> Файл успешно скопирован в 'testfile2.txt'";
 
-if (!copy ('testfile2.txt', 'testfile42.txt')) echo "Копирование невозможно <br>";
+if (!copy ('testfile2.txt', 'testfile42.txt')) echo "<br> Копирование невозможно <br>";
 else echo "<br> Файл успешно скопирован в 'testfile2.txt'";
+
+if (!rename('testfile2.txt', 'testfile2.new'))
+    echo "<br> Перемещение невозможно";
+else echo "<br> Файл успешно переименован в 'testfile2.new'";
+
+if (!unlink('testfile2.new')) echo "<br> Удаление невозможно";
+else echo "<br> Файл testfile2.new удалён успешно.";
+
+$fh = fopen('testfile.txt', 'r+') or die("<br> Сбой открытия файла");
+$text = fgets($fh);
+
+if(flock($fh, LOCK_EX))
+{
+    fseek($fh, 0, SEEK_END);
+    fwrite($fh, "$text") or die ("<br> Сбой записи в файл");
+    flock($fh, LOCK_UN);
+}
+
+fclose($fh);
+echo "<br> Файл 'testfile.txt' успешно обновлен";
+
+echo "<pre>";
+echo file_get_contents("testfile.txt");
+echo "</pre>";
+
+//echo file_get_contents("http://oreilly.com");
 
 ?>

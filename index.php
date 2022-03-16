@@ -17,8 +17,9 @@
         // include_once "class.php";
         // include "array.php";
         // include_once "practic.php";
-        include_once "practic2.php";
+        // include_once "practic2.php";
         // include_once "bubble-sort.php";
+        require 'upload.php';
     ?>
 
 
